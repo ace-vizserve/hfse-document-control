@@ -8,7 +8,7 @@ export type CurrentUser = {
 };
 
 export async function getCurrentUser(): Promise<CurrentUser | null> {
-  // `next dev` only: lets local testing act as a user without Microsoft.
+  // `next dev` only: lets local testing act as a user without signing in.
   const devEmail =
     process.env.NODE_ENV === "development"
       ? process.env.LOCAL_DEV_USER_EMAIL
@@ -22,14 +22,14 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // This Supabase project is shared with apps that use email + password, and one person's
-  // accounts can be linked. Require a Microsoft account and a session started through it.
-  if (!user?.email || !user.app_metadata?.providers?.includes("azure")) return null;
+  // Access is decided by email address in app/access.ts, so the address must be confirmed.
+  if (!user?.email || !user.email_confirmed_at) return null;
   const { data } = await supabase.auth.getClaims();
-  const signedInWithOAuth = data?.claims.amr?.some(
-    (entry) => (typeof entry === "string" ? entry : entry.method) === "oauth",
-  );
-  if (!signedInWithOAuth) return null;
+  const signedIn = data?.claims.amr?.some((entry) => {
+    const method = typeof entry === "string" ? entry : entry.method;
+    return method === "password" || method === "oauth";
+  });
+  if (!signedIn) return null;
 
   const fullName =
     typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : null;

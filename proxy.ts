@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Keeps the Microsoft session fresh. Access decisions stay in app/access.ts.
+// Keeps the sign-in session fresh. Access decisions stay in app/access.ts.
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   const supabase = createServerClient(
