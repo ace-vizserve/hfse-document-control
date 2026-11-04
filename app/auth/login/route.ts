@@ -14,7 +14,7 @@ export async function POST(request: Request) {
   return NextResponse.redirect(`${origin}/?auth_error=1`, { status: 303 });
 }
 
-// Microsoft sign-in. Nothing links here until the Azure app's redirect URL is fixed.
+// Microsoft sign-in.
 export async function GET(request: Request) {
   const { origin } = new URL(request.url);
   const supabase = await createAuthClient();
