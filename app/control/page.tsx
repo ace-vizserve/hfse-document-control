@@ -1,4 +1,5 @@
 import Control from './Control';
 import {access} from '../access';
+import AccessNotice from '../AccessNotice';
 export const dynamic='force-dynamic';
-export default async function Page(){const {canControl}=await access();if(!canControl)return <main className="entry"><h1>Restricted access</h1><p>Document Control is available only to authorised administrators.</p><a href="/">Return to home</a></main>;return <Control/>;}
+export default async function Page(){const {canControl}=await access();if(!canControl)return <AccessNotice kind="restricted" title="Restricted access" message="Document Control is available only to authorised administrators."/>;return <Control/>;}
