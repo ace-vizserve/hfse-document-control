@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { redirect } from "next/navigation";
 import { ArrowRight, BookOpen, CalendarCheck, ClipboardCheck, Lock, LogOut, ShieldCheck, TriangleAlert } from "lucide-react";
 import HomeTabs from "./HomeTabs";
 import { access } from "./access";
@@ -108,6 +109,8 @@ function WorkspaceRow({ icon, title, description, href, allowed }: Workspace) {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ auth_error?: string }> }) {
   const { user, canControl } = await access();
+  // Administrators work from the dashboard; this page is the sign-in and staff entry point.
+  if (canControl) redirect("/dashboard");
   const { auth_error } = await searchParams;
 
   const workspaces: Workspace[] = [
