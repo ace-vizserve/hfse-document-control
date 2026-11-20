@@ -23,6 +23,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import ThemeSwitch from "./ThemeSwitch";
 
 export type ShellUser = { email: string; name: string; initials: string };
 
@@ -114,6 +115,9 @@ export default function DashboardShell({
         </SidebarContent>
 
         <SidebarFooter>
+          <div className="px-1 pb-1">
+            <ThemeSwitch />
+          </div>
           <SidebarMenu>
             <SidebarMenuItem>
               <form action="/auth/signout" method="post">

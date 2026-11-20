@@ -2,6 +2,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* `dark:` utilities apply under <html class="dark">, but never inside a .force-light page (sign-in, notices). */
+@custom-variant dark (&:is(.dark *):not(.force-light, .force-light *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -46,7 +49,8 @@
   --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
 }
 
-:root {
+:root,
+.force-light {
   --radius: 0.625rem;
   --background: #f9f9f9;
   --foreground: #212346;
@@ -80,6 +84,41 @@
   --chart-2: #ed7622;
   --chart-3: #242e76;
   --chart-4: #06a5c2;
+  --chart-5: #8a90a8;
+}
+
+/* Dark theme (sidebar switch, app/(workspace)/_shell/ThemeSwitch.tsx): HFSE navy surfaces, lighter brand blue, same orange. */
+.dark {
+  --background: #0e1222;
+  --foreground: #e7e9f3;
+  --card: #151a2e;
+  --card-foreground: #e7e9f3;
+  --popover: #151a2e;
+  --popover-foreground: #e7e9f3;
+  --primary: #5b7cff;
+  --primary-foreground: #ffffff;
+  --secondary: #1d2340;
+  --secondary-foreground: #e7e9f3;
+  --muted: #1b2139;
+  --muted-foreground: #9aa1bd;
+  --accent: #222a4f;
+  --accent-foreground: #c9d4ff;
+  --destructive: #ff6b6b;
+  --border: #283050;
+  --input: #2f3757;
+  --ring: #fd8735;
+  --sidebar: #10153a;
+  --sidebar-foreground: #cfd4ec;
+  --sidebar-primary: #ed7622;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #1f2756;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #222a55;
+  --sidebar-ring: #fd8735;
+  --chart-1: #6b8bff;
+  --chart-2: #ff9a4d;
+  --chart-3: #a5b0ff;
+  --chart-4: #22c3e0;
   --chart-5: #8a90a8;
 }
 
@@ -142,4 +181,25 @@ a.msbutton,form .msbutton{width:fit-content;background:#fff;color:#20293b;cursor
   .dashpage .rcastats > div, .dashpage .stat, .dashpage .panel, .dashpage .attention, .dashpage .callout { border-radius: 14px; }
   .dashpage > footer, .dashpage .content > footer { margin-top: 28px; }
   .dashpage.librarypage .search { max-width: 640px; margin: 16px 0; background: #fff; padding: 12px 14px; border-radius: 10px; }
+}
+
+/* Dark mode for the older module pages shown inside the workspace shell. */
+@layer legacy {
+  .dark { background: var(--background); color: var(--foreground); color-scheme: dark; }
+  .dark .force-light { color-scheme: light; }
+  .dark [data-slot="sidebar-inset"] :is(p, td, .muted, small) { color: var(--muted-foreground); }
+  .dark [data-slot="sidebar-inset"] :is(h1, h2, h3, h4, strong, .doctitle, label, dd) { color: var(--foreground); }
+  .dark [data-slot="sidebar-inset"] :is(.stat, .panel, .attention, .modal, .rcastats > div, .entrycards section, .requestsection, .rcaitem, .categorycard, .relatedlist > div, .titleformat, .relatedpicker, .selectedreferences > div) {
+    background: var(--card); border-color: var(--border); color: var(--foreground);
+  }
+  .dark [data-slot="sidebar-inset"] :is(.callout, .locator, .notificationnotice, .requestnotice, .categoryheading td, .notificationitem pre) {
+    background: var(--muted); border-color: var(--border); color: var(--foreground);
+  }
+  .dark [data-slot="sidebar-inset"] th { background: var(--muted); color: var(--muted-foreground); border-color: var(--border); }
+  .dark [data-slot="sidebar-inset"] :is(td, .historyrow, .activity, .radarrow, .requestrow, .requestdetail, .notificationitem, .modalfoot, .actionbar) { border-color: var(--border); }
+  .dark [data-slot="sidebar-inset"] tbody tr:hover { background: var(--accent); }
+  .dark [data-slot="sidebar-inset"] :is(input, select, textarea):not([data-slot]) { background: var(--background); color: var(--foreground); border-color: var(--input); }
+  .dark [data-slot="sidebar-inset"] :is(.search, .filters select, .badge, .pill, .count, .fileicon, .emptyicon) { background: var(--muted); color: var(--muted-foreground); border-color: var(--border); }
+  .dark [data-slot="sidebar-inset"] :is(.panelheading > span, .panelfooter, .eyebrow) { color: var(--muted-foreground); }
+  .dark .overlay { background: #00000099; }
 }

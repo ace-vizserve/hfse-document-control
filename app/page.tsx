@@ -123,7 +123,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ a
   const initials = user?.email?.slice(0, 2).toUpperCase();
 
   return (
-    <div className="grid min-h-svh bg-desk font-sans text-foreground lg:h-svh lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+    <div className="force-light grid min-h-svh bg-desk font-sans text-foreground lg:h-svh lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       {/* Chalkboard in a wooden frame */}
       <div className="bg-wood flex flex-col p-3 pb-0 lg:p-4 lg:pb-0">
         <div className="bg-chalkboard relative flex flex-1 flex-col overflow-hidden rounded-[4px] p-6 pb-10 text-white lg:p-9 lg:pb-12">

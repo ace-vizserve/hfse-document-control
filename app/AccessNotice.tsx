@@ -13,7 +13,7 @@ export default function AccessNotice({
   message: string;
 }) {
   return (
-    <div className="bg-desk flex min-h-svh items-center justify-center p-4 font-sans text-foreground sm:p-6">
+    <div className="force-light bg-desk flex min-h-svh items-center justify-center p-4 font-sans text-foreground sm:p-6">
       <div className="w-full max-w-xl">
         {/* Small chalkboard in a wooden frame */}
         <div className="bg-wood rounded-md p-2.5 pb-0 shadow-[0_18px_40px_rgba(33,35,70,0.18)]">
